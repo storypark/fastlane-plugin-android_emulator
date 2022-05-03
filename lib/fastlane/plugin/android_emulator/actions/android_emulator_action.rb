@@ -14,10 +14,12 @@ module Fastlane
         system("#{adb} emu kill > /dev/null 2>&1 &")
         sleep(2)
 
+        cmd_avdmanager_create_avd="#{cmdline_tools_latest}/avdmanager create avd -n '#{params[:name]}' -f -k '#{params[:package]}' -d '#{params[:device]}'"
+        
         UI.message("Creating new emulator")
-        UI.message("Calling #{cmdline_tools_latest}/avdmanager create avd")
+        UI.message(cmd_avdmanager_create_avd)
         FastlaneCore::CommandExecutor.execute(
-          command: "#{cmdline_tools_latest}/avdmanager create avd -n '#{params[:name]}' -f -k '#{params[:package]}' -d '#{params[:device]}'",
+          command: cmd_avdmanager_create_avd,
           print_all: true,
           print_command: false
         )
