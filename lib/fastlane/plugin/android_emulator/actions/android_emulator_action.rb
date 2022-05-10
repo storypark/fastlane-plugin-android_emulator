@@ -13,6 +13,7 @@ module Fastlane
         sdk_dir = params[:sdk_dir]
         port = params[:port]
         adb = "#{sdk_dir}/platform-tools/adb"
+        cmdline_tools_latest="#{sdk_dir}/cmdline-tools/latest/bin"
 
         UI.message("Stopping emulator")
         system("#{adb} emu kill > /dev/null 2>&1 &")
@@ -21,7 +22,7 @@ module Fastlane
         if !avd_active(params) || params[:cold_boot]
           UI.message("Creating new emulator")
           FastlaneCore::CommandExecutor.execute(
-            command: "#{sdk_dir}/tools/bin/avdmanager create avd -n '#{params[:name]}' -f -k '#{params[:package]}' -d '#{params[:device]}'",
+            command: "#{cmdline_tools_latest}/avdmanager create avd -n '#{params[:name]}' -f -k '#{params[:package]}' -d '#{params[:device]}'",
             print_all: true,
             print_command: false
           )
